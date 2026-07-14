@@ -1,0 +1,7 @@
+faster-whisper==1.2.0
+sounddevice==0.5.3
+soundfile==0.13.1
+pyttsx3==2.99
+silero-vad==6.0.0
+onnxruntime==1.22.1
+numpy==2.3.1
