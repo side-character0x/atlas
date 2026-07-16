@@ -314,7 +314,3 @@ Workspace loaded successfully.
 ```
 
 ---
-
-# Need Help?
-
-If you encounter an issue or have suggestions for Atlas, please open an issue on the GitHub repository.
