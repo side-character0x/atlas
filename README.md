@@ -1,44 +1,79 @@
 # Atlas
 
-Atlas is a command-line productivity assistant designed to automate the initialization of development resources. It reduces the repetitive process of opening applications, websites, files, and workspaces by allowing users to launch them through simple keyboard or voice commands.
+A Python productivity assistant that eliminates repetitive setup tasks by launching applications, websites, files, and complete development workspaces through simple keyboard or voice commands.
 
-> **Status:** Prototype (Version 0.1)
+Instead of manually opening the same tools every day, Atlas lets you start your working environment with a single command.
 
----
-
-## Features
-
-### Resource Initialization
-Launch commonly used resources with a single command.
-
-Supported resource types:
-- Windows applications (.exe)
-- Local files and folders
-- URLs and websites
+> Status: Active Prototype (v0.1)
 
 ---
 
-### Voice Commands
-Atlas includes an experimental voice interface.
+# Why Atlas?
 
-Current voice pipeline:
-- Voice Activity Detection (Silero VAD)
-- Speech-to-Text (Faster-Whisper)
-- Wake-word detection
-- Command execution
+Developers often begin each session by opening the same applications, folders, browser tabs, and documentation.
 
-Example:
+Atlas automates that process.
+
+Instead of
+
+- Opening Chrome
+- Opening VS Code
+- Opening GitHub
+- Opening documentation
+- Opening Terminal
+
+you can simply run
 
 ```text
-Computer
-Open Chrome
+load workspace python
 ```
+
+and Atlas launches everything automatically.
 
 ---
 
-### Workspace Management
+# Features
 
-Create a workspace containing multiple resources and launch them simultaneously.
+### Launch Applications
+
+```text
+open chrome
+
+open vscode
+
+open notepad
+```
+
+Atlas automatically discovers applications using:
+
+- Atlas Registry
+- Windows Registry
+- Start Menu
+- Windows PATH
+
+Discovered applications are cached for faster future launches.
+
+---
+
+### Search the Web
+
+Search directly from the terminal.
+
+```text
+search google python decorators
+
+search github requests library
+
+search youtube pandas tutorial
+```
+
+Supported engines include Google, GitHub, Stack Overflow, YouTube, Reddit, MDN and more.
+
+---
+
+### Workspaces
+
+Save frequently used resources into reusable workspaces.
 
 Example:
 
@@ -46,25 +81,53 @@ Example:
 create workspace python
 ```
 
-Save resources such as:
+Store
 
 - VS Code
 - Chrome
+- GitHub
 - Documentation
-- GitHub Repository
 - Terminal
 
-Later,
+Later
 
 ```text
 load workspace python
 ```
 
-will initialize the complete development environment instantly.
+launches the complete environment instantly.
 
 ---
 
-## Current Architecture
+### Voice Commands
+
+Atlas includes an experimental voice interface.
+
+Example
+
+```text
+Computer
+
+Open Chrome
+```
+
+Voice Pipeline
+
+```
+Voice Activity Detection
+        ↓
+Wake Word Detection
+        ↓
+Speech Recognition
+        ↓
+Command Execution
+```
+
+Keyboard commands remain available while voice mode runs in the background.
+
+---
+
+# Architecture
 
 ```
 User
@@ -82,59 +145,59 @@ Main Controller
 Action Executor
 ```
 
-Voice commands run on a background thread while keyboard commands remain available.
+Each layer has a dedicated responsibility, making Atlas easier to extend and maintain.
 
 ---
 
-## Technologies Used
+# Technologies
 
 - Python
-- Faster-Whisper
-- Silero VAD
-- SoundDevice
-- SoundFile
-- pyttsx3
 - SQLite
+- Faster Whisper
+- Silero VAD
+- Requests
+- SoundDevice
+- pyttsx3
 
 ---
 
-## Current Limitations
+# Example Session
 
-This repository represents an early prototype.
+```text
+> load workspace python
 
-Known limitations include:
+Launching...
 
-- Wake-word detection is still experimental.
-- Speech recognition accuracy varies depending on microphone quality and pronunciation.
-- Command validation requires improvement.
-- Voice command processing is not yet optimized for production use.
-- Error handling and edge-case coverage are still under development.
+✓ VS Code
+
+✓ Chrome
+
+✓ GitHub
+
+✓ Python Documentation
+
+Workspace loaded successfully.
+```
 
 ---
 
-## Future Improvements
+# Current Status
 
-Planned enhancements include:
+Atlas is an actively developed prototype.
 
-- Improved speech recognition accuracy
+Current development focuses on
+
+- Improving command validation
 - Better wake-word detection
-- Fuzzy command matching
-- Plugin architecture
-- Background service mode
-- Smarter command parsing
+- Smarter routing
+- Improved voice recognition
+- Better error handling
 - Performance optimization
-- Improved validation and error recovery
 
 ---
 
-## Motivation
+# Project Goal
 
-Atlas was built to eliminate repetitive setup tasks during development. Instead of manually opening the same applications, folders, browser tabs, and project resources every day, Atlas automates the process through reusable workspaces and voice commands.
+Atlas is not intended to be another chatbot.
 
-The long-term goal is to evolve Atlas into a modular productivity assistant for developers.
-
----
-
-## Project Status
-
-This project is currently under active development and serves as a learning project focused on software architecture, automation, threading, voice interfaces, and command routing.
+The long-term objective is to build a modular productivity assistant focused on automation and workflow management for developers.
