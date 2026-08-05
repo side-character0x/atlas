@@ -7,11 +7,11 @@ class Route:
         self.url=URL()    
     def evaluate(self,cmd):
         try:
-            dismantled=cmd.split()
-            action,target=dismantled[0].lower(),dismantled[1:]
-            suffix=" ".join(target)
+            action_part,target_part=cmd.split(",",1)
+            action=action_part.split(":",1)[1].strip().lower()
+            target=target_part.split(":",1)[1].strip()
             if action=="open":
-                resource=self.open_guide(suffix)         
+                resource=self.open_guide(target)         
             elif action=="search":
                 resource=self.search_guide(target)
             elif action=="create":
@@ -21,10 +21,12 @@ class Route:
             elif action=="view":
                 resource=self.load_guide(target,view=True)
             elif action=="system":
-                resource=suffix
+                resource=target
+            else:
+                resource=False
             return action,resource
-        except UnboundLocalError:
-            return action,False
+        except (ValueError, IndexError, UnboundLocalError):
+            return None,False
     def open_guide(self,target):
         path=self.paths.atlasreg(target)
         if path:
@@ -38,11 +40,13 @@ class Route:
         path=target
         return path
     def search_guide(self,target):
+        target=target.split()
         engine,search_query=target[0]," ".join(target[1:])
+        print(f"Searching for {search_query} using {engine} engine...")
         url=self.url.generate_query(engine,search_query)
         return url
     def create_guide(self,target,workspace_resources):
-        workspace_name=" ".join(target[1:])
+        workspace_name=self.workspace_name(target)
         resources=[]
         types=[]
         browser=[]
@@ -52,7 +56,7 @@ class Route:
             browser.append(data[2])
         self.paths.store_data(workspace_name,resources,resource_type=types,type="workspace",browsers=browser)
     def load_guide(self,target,view=False):
-        workspace=" ".join(target[1:])
+        workspace=self.workspace_name(target)
         resources=self.paths.convey_resources(workspace)
         if view:
             if not resources:
@@ -93,6 +97,12 @@ class Route:
             return False
     def delete_divert(self,resources):
         self.paths.convey_resources(resources,use="delete")
+
+    def workspace_name(self,target):
+        parts=target.split()
+        if len(parts)>1 and parts[0].lower() in ("workspace","project"):
+            return " ".join(parts[1:])
+        return target.strip()
 
 
 

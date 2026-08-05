@@ -4,9 +4,8 @@ class Interface:
     def __init__(self,Route):
         self.route=Route
     def query(self):
-        while True:
-            cmd=input("Enter the command:")
-            return cmd
+        cmd=input("Enter the command:")
+        return cmd
     def error_handle(self,error):
         print(error)
     def workspace_query(self):
